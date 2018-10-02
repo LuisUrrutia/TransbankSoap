@@ -1,0 +1,19 @@
+{
+    "name": "luisurrutia/transbank-soap-validation",
+    "description": "Utilidades de validación para SDK de Transbank",
+    "require": {
+        "robrichards/xmlseclibs": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LuisUrrutia\\TransbankSoapValidation\\": "src"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luis Sebastian Urrutia Fuentes",
+            "email": "luis@urrutia.me"
+        }
+    ]
+}
