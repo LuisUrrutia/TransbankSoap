@@ -1,12 +1,13 @@
 {
-    "name": "luisurrutia/transbank-soap-validation",
-    "description": "Utilidades de validación para SDK de Transbank",
+    "name": "luisurrutia/transbank-soap",
+    "description": "Utilidades de validación y procesamiento SOAP para SDK de Transbank",
     "require": {
-        "robrichards/xmlseclibs": "^3.0"
+        "robrichards/xmlseclibs": "^3.0",
+        "robrichards/wse-php": "^2.0"
     },
     "autoload": {
         "psr-4": {
-            "LuisUrrutia\\TransbankSoapValidation\\": "src"
+            "LuisUrrutia\\TransbankSoap\\": "src"
         }
     },
     "license": "MIT",

@@ -1,6 +1,11 @@
 <?php
 
-namespace LuisUrrutia\TransbankSoapValidation;
+namespace LuisUrrutia\TransbankSoap;
+
+use DOMXPath;
+use Exception;
+use DOMDocument;
+use \RobRichards\XMLSecLibs\XMLSecurityDSig;
 
 class Validation
 {
@@ -14,7 +19,7 @@ class Validation
 
     public function __construct($xml, $cert)
     {
-        $doc = new \DOMDocument("1.0");
+        $doc = new DOMDocument("1.0");
         $doc->loadXML($xml);
         $this->doc = $doc;
 
@@ -28,8 +33,8 @@ class Validation
     private function getSignatureValue($node)
     {
         $doc = $node->ownerDocument;
-        $xpath = new \DOMXPath($doc);
-        $xpath->registerNamespace('secdsig', \RobRichards\XMLSecLibs\XMLSecurityDSig::XMLDSIGNS);
+        $xpath = new DOMXPath($doc);
+        $xpath->registerNamespace('secdsig', XMLSecurityDSig::XMLDSIGNS);
         $query = "string(./secdsig:SignatureValue)";
         $sigValue = $xpath->evaluate($query, $node);
 
@@ -47,7 +52,7 @@ class Validation
 
     private function validateSignature()
     {
-        $XMLSecurityDSig = new \RobRichards\XMLSecLibs\XMLSecurityDSig();
+        $XMLSecurityDSig = new XMLSecurityDSig();
         $XMLSecurityDSig->idKeys = array('wsu:Id');
         $XMLSecurityDSig->idNS = array('wsu'=> self::NS_WSU);
 
@@ -60,13 +65,12 @@ class Validation
         $key = $XMLSecurityDSig->locateKey();
         $key->loadKey($this->cert, false, true);
 
-
         $signatureValue = $this->getSignatureValue($node);
 
         $valid = $key->verifySignature($signedInfo, base64_decode($signatureValue));
 
         if (!$valid) {
-            throw new \Exception('Invalid Signature');
+            throw new Exception('Invalid Signature');
         }
 
         return $key;
@@ -79,7 +83,7 @@ class Validation
         $valid = $XMLSecurityBody->compareDigest($this->digest, $key->type);
 
         if (!$valid) {
-            throw new \Exception('Invalid Body');
+            throw new Exception('Invalid Body');
         }
     }
 

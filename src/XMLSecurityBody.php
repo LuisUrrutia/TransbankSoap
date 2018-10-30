@@ -1,6 +1,8 @@
 <?php
 
-namespace LuisUrrutia\TransbankSoapValidation;
+namespace LuisUrrutia\TransbankSoap;
+
+use DOMDocument;
 
 class XMLSecurityBody
 {
@@ -36,7 +38,7 @@ class XMLSecurityBody
 
     public function locateBody($objDoc, $pos = 0)
     {
-        if ($objDoc instanceof \DOMDocument) {
+        if ($objDoc instanceof DOMDocument) {
             $doc = $objDoc;
         } else {
             $doc = $objDoc->ownerDocument;
